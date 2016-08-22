@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Huang's Clips</title>
+
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Exo+2:200,300,400" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+
+    *::selection {
+      background-color: #f6a9e8;
+      color: #fff;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    #content-wrapper {
+      max-width: 620px;
+      margin: 5% auto;
+      padding: 50px;
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 200;
+      background-color: #72131c;
+      color: #fff;
+    }
+
+    @media (max-width: 767px) {
+      #content-wrapper {
+        margin: 0 auto;
+        padding: 10px;
+      }
+    }
+
+    .reporter-name {
+      font-size: 27px;
+      font-weight: 400;
+      margin-bottom: 2px;
+      text-align: right;
+    }
+
+    .reporter-bio {
+      max-width: 100%;
+      text-align: right;
+    }
+
+    .reporter-bio > div {
+      width: 475px;
+      font-size: 21px;
+      display: inline-block;
+    }
+
+    @media (max-width: 767px) {
+      .reporter-bio > div {
+        width: auto;
+      }
+    }
+
+    hr {
+      border: 0;
+      height: 2px;
+      background-color: #efefef;
+      width: 55px;
+      margin: 30px 0 7px;
+    }
+
+    .story-title {
+      font-size: 19px;
+      line-height: 23px;
+      font-weight: 400;
+      max-width: 480px;
+      margin-bottom: 3px;
+      -moz-transition: -moz-transform .2s ease-out;
+      -o-transition: -o-transform .2s ease-out;
+      -webkit-transition: -webkit-transform .2s ease-out;
+      transition: transform .2s ease-out;
+    }
+
+    .story-title:hover {
+      -moz-transform: translateX(3px);
+      -ms-transform: translateX(3px);
+      -webkit-transform: translateX(3px);
+      transform: translateX(3px);
+    }
+
+    .story-title > a {
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .story-title > a > span {
+      text-decoration: none;
+      color: #f6a9e8;
+    }
+
+    .dek {
+      font-size: 14px;
+      line-height: 19px;
+      margin-bottom: 6px;
+    }
+
+    .timestamp {
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div id="content-wrapper"></div>
+
+  <script src="libs/jquery.min.js"></script>
+
+  <script>
+    var html = '';
+
+    $.getJSON('results.json').then(function(data){
+      html += '<div class="reporter-name">'+ data.reporter +'</div>'+
+              '<div class="reporter-bio"><div>'+ data.bio +'</div></div>';
+
+      var stories = data.stories;
+      stories.forEach(function(story){
+        var dek = story.dek;
+        if (dek === undefined) {
+          dek = '';
+        }
+        html += '<div class="story"><hr>'+
+                  '<div class="story-title"><a href="'+ story.link +'" target="_blank">' + story.title + ' <span>»</span></a></div>'+
+                  '<div class="dek">'+ dek +'</div>'+
+                  '<div class="timestamp">Published '+ story.timestamp +'</div>'+
+                '</div>';
+      });
+      $('#content-wrapper').append(html);
+    });
+  </script>
+</body>
+</html>
