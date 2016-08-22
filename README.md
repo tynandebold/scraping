@@ -1,0 +1,1 @@
+An application that scrapes the most recent articles of a reporter who writes for The Wall Street Journal and presents them in a clear, concise manner.
